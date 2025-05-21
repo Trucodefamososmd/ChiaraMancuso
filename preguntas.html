@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Juego de Preguntas - Chiara Mancuso</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Verdana', sans-serif;
+      background: linear-gradient(135deg, #000000, #005500, #00ff00, #000000);
+      background-size: 400% 400%;
+      animation: serpienteFondo 15s ease infinite;
+      color: white;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    @keyframes serpienteFondo {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 3em;
+      text-shadow: 3px 3px #000;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    .question-container {
+      max-width: 700px;
+      background: rgba(0, 51, 0, 0.8);
+      border: 2px solid #00ff00;
+      border-radius: 15px;
+      padding: 25px 30px;
+      box-shadow: 0 0 15px #00ff00;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .options li {
+      margin: 12px 0;
+    }
+
+    .options button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(145deg, #00cc00, #003300);
+      color: black;
+      box-shadow: 0 4px 8px #000;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .options button:hover {
+      background: linear-gradient(145deg, #33ff33, #006600);
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px #00ff00;
+    }
+
+    #result {
+      font-size: 1.6em;
+      margin-top: 20px;
+      text-shadow: 2px 2px #000;
+      min-height: 40px;
+    }
+
+    .boton {
+      background: linear-gradient(145deg, #00cc00, #003300);
+      border: 2px solid #00ff00;
+      color: black;
+      padding: 15px 35px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px #000;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      margin-top: 30px;
+      align-self: center;
+      display: inline-block;
+    }
+
+    .boton:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px #00ff00;
+      background: linear-gradient(145deg, #33ff33, #006600);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Juego de Preguntas - Chiara Mancuso</h1>
+
+  <div class="question-container">
+    <div id="question" class="question"></div>
+    <ul id="options" class="options"></ul>
+    <div id="result"></div>
+  </div>
+
+  <a href="index.html" class="boton">🐍 Volver al inicio</a>
+
+  <script>
+    const questions = [
+      {
+        question: "¿Cuál es el apodo que tienen sus amigos para Chiara?",
+        options: ["La reina del baile", "La cobra máxima", "La artista misteriosa", "La musa del humor"],
+        answer: 1
+      },
+      {
+        question: "¿Qué le apasiona a Chiara Mancuso?",
+        options: ["Deportes extremos", "Arte, música y humor sarcástico", "Cocina gourmet", "Astronomía"],
+        answer: 1
+      },
+      {
+        question: "¿Qué característica destaca en Chiara desde pequeña?",
+        options: ["Timidez extrema", "Inteligencia y carisma", "Gran deportista", "Habilidad matemática"],
+        answer: 1
+      },
+      {
+        question: "¿Cómo se describe su personalidad?",
+        options: ["Elegante y picarona", "Tímida y reservada", "Simpática pero callada", "Seria y formal"],
+        answer: 0
+      },
+      {
+        question: "¿Dónde ha dejado huella Chiara?",
+        options: ["En sus estudios", "En pasillos escolares y corazones de amigos", "En competencias deportivas", "En concursos de belleza"],
+        answer: 1
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const resultEl = document.getElementById('result');
+
+    function loadQuestion() {
+      resultEl.textContent = '';
+      const q = questions[currentQuestion];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = '';
+
+      q.options.forEach((option, index) => {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.onclick = () => selectOption(index);
+        li.appendChild(button);
+        optionsEl.appendChild(li);
+      });
+    }
+
+    function selectOption(selectedIndex) {
+      const correct = questions[currentQuestion].answer;
+      if(selectedIndex === correct){
+        score++;
+        resultEl.textContent = "¡Correcto! 🐍";
+        resultEl.style.color = "#33ff33";
+      } else {
+        resultEl.textContent = `Incorrecto. La respuesta correcta es: "${questions[currentQuestion].options[correct]}"`;
+        resultEl.style.color = "#ff3333";
+      }
+
+      // Bloquear botones para no responder varias veces
+      Array.from(optionsEl.children).forEach(li => {
+        li.firstChild.disabled = true;
+        li.firstChild.style.cursor = 'default';
+      });
+
+      // Avanzar a la siguiente pregunta después de 2 segundos
+      setTimeout(() => {
+        currentQuestion++;
+        if(currentQuestion < questions.length){
+          loadQuestion();
+        } else {
+          showFinalScore();
+        }
+      }, 2000);
+    }
+
+    function showFinalScore(){
+      questionEl.textContent = `¡Juego terminado! Tu puntaje es ${score} de ${questions.length}.`;
+      optionsEl.innerHTML = '';
+      resultEl.textContent = '';
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>

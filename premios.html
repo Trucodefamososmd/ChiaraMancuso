@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premios - Chiara Mancuso</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Verdana', sans-serif;
+      background: linear-gradient(135deg, #000000, #005500, #00ff00, #000000);
+      background-size: 400% 400%;
+      animation: serpienteFondo 15s ease infinite;
+      color: white;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    @keyframes serpienteFondo {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 3em;
+      text-shadow: 3px 3px #000;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .premio {
+      background: rgba(0, 51, 0, 0.8);
+      border: 2px solid #00ff00;
+      border-radius: 15px;
+      padding: 10px;
+      width: 200px;
+      min-height: 250px;
+      box-shadow: 0 0 15px #00ff00;
+    }
+
+    .premio h3 {
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+
+    .dropzone {
+      width: 100%;
+      height: 200px;
+      border: 2px dashed #00ff00;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .dropzone img {
+      width: 100%;
+      height: auto;
+    }
+
+    .jugadores {
+      margin: 30px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .jugadores img {
+      width: 80px;
+      cursor: grab;
+      border-radius: 10px;
+      transition: transform 0.2s;
+    }
+
+    .jugadores img:hover {
+      transform: scale(1.1);
+    }
+
+    button {
+      background: linear-gradient(145deg, #00cc00, #003300);
+      border: 2px solid #00ff00;
+      color: black;
+      padding: 15px 35px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px #000;
+      cursor: pointer;
+      margin: 20px 10px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px #00ff00;
+      background: linear-gradient(145deg, #33ff33, #006600);
+    }
+  </style>
+</head>
+<body>
+  <h1>Premios - Chiara Mancuso</h1>
+  <div class="jugadores" id="jugadores"></div>
+  <div class="container" id="categorias"></div>
+  <div>
+    <button onclick="window.location.href='index.html'">Volver al inicio</button>
+  </div>
+
+  <script>
+    const jugadores = Array.from({length: 35}, (_, i) => `jugadores/${i+1}.png`);
+    const usados = new Set();
+    const categorias = [
+      "Más víbora", "Más planta", "Más gracioso", "Más competitivo", "Más buena onda", "Más estratega",
+      "Más rencoroso", "Más llorón", "Más líder", "Más pacífico", "Más traidor", "Más amoroso",
+      "Más comilón", "Más dormilón", "Más divertido", "Más insistente", "Más rápido", "Más lento",
+      "Más molesto", "Más chillón", "Más elegante", "Más fachero", "Más influencer", "Más escandaloso",
+      "Más vengativo", "Más intenso", "Más justo", "Más relajado", "Más simpático", "Más misterioso",
+      "Más caótico", "Más romántico", "Más jugador del pueblo", "Más estratega oculto", "Más querido"
+    ];
+
+    jugadores.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.draggable = true;
+      img.id = src;
+      img.ondragstart = e => {
+        e.dataTransfer.setData("text/plain", src);
+      };
+      document.getElementById('jugadores').appendChild(img);
+    });
+
+    categorias.forEach(nombre => {
+      const div = document.createElement('div');
+      div.className = 'premio';
+      div.innerHTML = `<h3>${nombre}</h3><div class='dropzone' ondragover='event.preventDefault()' ondrop='handleDrop(event, "${nombre}")'></div>`;
+      document.getElementById('categorias').appendChild(div);
+    });
+
+    const elecciones = {};
+
+    function handleDrop(event, categoria) {
+      const src = event.dataTransfer.getData("text/plain");
+      if (usados.has(src)) {
+        alert("Ya usaste esta imagen.");
+        return;
+      }
+      usados.add(src);
+      const zona = event.target;
+      zona.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = src;
+      zona.appendChild(img);
+      elecciones[categoria] = src;
+    }
+  </script>
+</body>
+</html>

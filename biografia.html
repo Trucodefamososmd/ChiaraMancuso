@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biografía de Chiara Mancuso</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Verdana', sans-serif;
+      background: linear-gradient(135deg, #000000, #005500, #00ff00, #000000);
+      background-size: 400% 400%;
+      animation: serpienteFondo 15s ease infinite;
+      color: white;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    @keyframes serpienteFondo {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 3em;
+      text-shadow: 3px 3px #000;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    p {
+      max-width: 800px;
+      font-size: 1.3em;
+      line-height: 1.6;
+      text-shadow: 1px 1px #000;
+      margin-bottom: 50px;
+    }
+
+    .boton {
+      background: linear-gradient(145deg, #00cc00, #003300);
+      border: 2px solid #00ff00;
+      color: black;
+      padding: 15px 35px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px #000;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+
+    .boton:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px #00ff00;
+      background: linear-gradient(145deg, #33ff33, #006600);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Biografía de Chiara Mancuso</h1>
+
+  <p>
+    Chiara Mancuso nació con una chispa única que la distingue allá donde va. Apasionada por el arte, la música y el humor sarcástico, ha construido un camino propio basado en la autenticidad y la creatividad.
+    <br><br>
+    Desde pequeña destacó por su inteligencia y carisma, convirtiéndose rápidamente en referente de estilo y personalidad. Conocida entre sus amigos como "la cobra máxima", Chiara combina elegancia con picardía. No teme decir lo que piensa ni mostrar su lado más excéntrico.
+    <br><br>
+    Ha dejado huella en cada lugar que pisó, desde pasillos escolares hasta los corazones de quienes la conocen.
+  </p>
+
+  <a class="boton" href="index.html">🐍 Volver al inicio</a>
+
+</body>
+</html>
