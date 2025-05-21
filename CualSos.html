@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Qué Chiara sos?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Verdana', sans-serif;
+      background: linear-gradient(135deg, #000000, #005500, #00ff00, #000000);
+      background-size: 400% 400%;
+      animation: serpienteFondo 15s ease infinite;
+      color: white;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    @keyframes serpienteFondo {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 3em;
+      text-shadow: 3px 3px #000;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    .question-container {
+      background: rgba(0, 51, 0, 0.8);
+      border: 2px solid #00ff00;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 15px #00ff00;
+      max-width: 500px;
+    }
+
+    button {
+      background: linear-gradient(145deg, #00cc00, #003300);
+      border: 2px solid #00ff00;
+      color: black;
+      padding: 10px 20px;
+      font-size: 1em;
+      font-weight: bold;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px #000;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px #00ff00;
+      background: linear-gradient(145deg, #33ff33, #006600);
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .result {
+      margin-top: 40px;
+      font-size: 1.5em;
+      text-shadow: 2px 2px #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Qué Chiara sos?</h1>
+  <div class="question-container" id="quiz"></div>
+  <script>
+    const questions = [
+      {
+        text: "¿Qué hacés en una fiesta?",
+        options: [
+          { text: "Bailo hasta que me duelen los pies", type: "divertida" },
+          { text: "Armo estrategia para juegos", type: "estratega" },
+          { text: "Hablo con todos", type: "loca" },
+          { text: "Miro tranquilo/a desde un costado", type: "tranqui" }
+        ]
+      },
+      {
+        text: "¿Cómo reaccionás ante un problema?",
+        options: [
+          { text: "Respiro hondo y busco solución", type: "tranqui" },
+          { text: "Armo un plan al toque", type: "estratega" },
+          { text: "Me río para relajar", type: "divertida" },
+          { text: "Explotás y después ves", type: "loca" }
+        ]
+      },
+      {
+        text: "Tu lugar ideal es...",
+        options: [
+          { text: "Una guerra de almohadas", type: "divertida" },
+          { text: "Una reunión de planificación", type: "estratega" },
+          { text: "Una plaza con gente random", type: "loca" },
+          { text: "Una siesta en casa", type: "tranqui" }
+        ]
+      },
+      {
+        text: "¿Cuál es tu superpoder?",
+        options: [
+          { text: "Siempre armar el mejor plan", type: "estratega" },
+          { text: "Hacer reír hasta a una piedra", type: "divertida" },
+          { text: "Conocer a todos/as en segundos", type: "loca" },
+          { text: "Mantener la calma en el caos", type: "tranqui" }
+        ]
+      },
+      {
+        text: "¿Qué preferís?",
+        options: [
+          { text: "Una noche de juegos", type: "estratega" },
+          { text: "Una tarde de risas", type: "divertida" },
+          { text: "Una aventura espontánea", type: "loca" },
+          { text: "Un día de paz", type: "tranqui" }
+        ]
+      },
+      {
+        text: "¿Qué te molesta más?",
+        options: [
+          { text: "Que no sigan un plan", type: "estratega" },
+          { text: "Que haya malas vibras", type: "divertida" },
+          { text: "Que la gente no se anime", type: "loca" },
+          { text: "El ruido constante", type: "tranqui" }
+        ]
+      },
+      {
+        text: "Tu frase de cabecera es:",
+        options: [
+          { text: "¡Vamo' con todo!", type: "loca" },
+          { text: "¿Y si hacemos...?", type: "estratega" },
+          { text: "¡Qué risa, boludo!", type: "divertida" },
+          { text: "Tranqui, ya fue", type: "tranqui" }
+        ]
+      },
+      {
+        text: "¿Qué preferís mirar?",
+        options: [
+          { text: "Una serie de crimen perfecto", type: "estratega" },
+          { text: "Una comedia tonta", type: "divertida" },
+          { text: "Un video viral loco", type: "loca" },
+          { text: "Un documental sobre naturaleza", type: "tranqui" }
+        ]
+      },
+      {
+        text: "¿Cómo te describirían tus amigos?",
+        options: [
+          { text: "Siempre con ideas", type: "estratega" },
+          { text: "Impredecible", type: "loca" },
+          { text: "Payasa", type: "divertida" },
+          { text: "Relajada", type: "tranqui" }
+        ]
+      },
+      {
+        text: "¿Qué emoji sos?",
+        options: [
+          { text: "🧠", type: "estratega" },
+          { text: "😂", type: "divertida" },
+          { text: "😜", type: "loca" },
+          { text: "😌", type: "tranqui" }
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    const scores = { loca: 0, divertida: 0, estratega: 0, tranqui: 0 };
+    const container = document.getElementById('quiz');
+
+    function showQuestion(index) {
+      const q = questions[index];
+      container.innerHTML = `<h2>${q.text}</h2><div class="options">${q.options.map((opt, i) => `<button onclick="selectOption(${index}, ${i})">${opt.text}</button>`).join('')}</div>`;
+    }
+
+    function selectOption(qIndex, optIndex) {
+      const type = questions[qIndex].options[optIndex].type;
+      scores[type]++;
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion(currentQuestion);
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let result = Object.entries(scores).sort((a,b) => b[1] - a[1])[0][0];
+      const tipoTexto = {
+        loca: "¡Sos una Chiara LOCA! Siempre lista para la locura, la aventura y lo inesperado.",
+        divertida: "¡Sos una Chiara DIVERTIDA! La risa y el humor son tu esencia.",
+        estratega: "¡Sos una Chiara ESTRATEGA! Todo lo pensás dos veces y siempre encontrás el mejor plan.",
+        tranqui: "¡Sos una Chiara TRANQUI! Calmado/a, amable, y con mucha paz para dar."
+      };
+      container.innerHTML = `<div class='result'>${tipoTexto[result]}</div><button onclick='location.reload()'>Volver a empezar</button><br><br><button onclick="window.location.href='index.html'">Volver al inicio</button>`;
+    }
+
+    showQuestion(currentQuestion);
+  </script>
+</body>
+</html>

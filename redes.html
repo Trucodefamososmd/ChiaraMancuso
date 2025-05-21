@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redes - Chiara Mancuso</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Verdana', sans-serif;
+      background: linear-gradient(135deg, #000000, #005500, #00ff00, #000000);
+      background-size: 400% 400%;
+      animation: serpienteFondo 15s ease infinite;
+      color: white;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    @keyframes serpienteFondo {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 3em;
+      text-shadow: 3px 3px #000;
+      margin-bottom: 40px;
+    }
+
+    .redes {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    a {
+      background: linear-gradient(145deg, #00cc00, #003300);
+      border: 2px solid #00ff00;
+      color: black;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 15px;
+      text-decoration: none;
+      box-shadow: 0 4px 8px #000;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px #00ff00;
+      background: linear-gradient(145deg, #33ff33, #006600);
+    }
+
+    button {
+      background: linear-gradient(145deg, #00cc00, #003300);
+      border: 2px solid #00ff00;
+      color: black;
+      padding: 15px 35px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px #000;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px #00ff00;
+      background: linear-gradient(145deg, #33ff33, #006600);
+    }
+  </style>
+</head>
+<body>
+  <h1>Redes de Chiara Mancuso</h1>
+  <div class="redes">
+    <a href="https://www.instagram.com/chiarimancuso?igsh=MXRucGFjam15ZTU0ZA==" target="_blank">Instagram</a>
+    <a href="https://x.com/mancusochiaraok?s=11" target="_blank">X (Twitter)</a>
+    <a href="https://www.tiktok.com/@chiaramancusoo?_t=ZM-8wXw250AuN3&_r=1" target="_blank">TikTok</a>
+  </div>
+  <button onclick="window.location.href='index.html'">Volver al inicio</button>
+</body>
+</html>
