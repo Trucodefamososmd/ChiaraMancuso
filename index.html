@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chiara Mancuso</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'UnifrakturCook', cursive;
+      background: linear-gradient(135deg, #000000, #005500, #00ff00, #000000);
+      background-size: 400% 400%;
+      animation: serpienteFondo 15s ease infinite;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    @keyframes serpienteFondo {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-size: 4em;
+      text-shadow: 3px 3px #000;
+      margin-bottom: 50px;
+      letter-spacing: 4px;
+    }
+
+    .boton {
+      background: linear-gradient(145deg, #00cc00, #003300);
+      border: 2px solid #00ff00;
+      color: black;
+      padding: 15px 35px;
+      margin: 15px;
+      font-size: 1.3em;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px #000;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .boton:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px #00ff00;
+      background: linear-gradient(145deg, #33ff33, #006600);
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Chiara Mancuso</h1>
+
+  <a href="biografia.html"><button class="boton">🐍 Biografía</button></a>
+  <a href="preguntas.html"><button class="boton">🐍 Juego de Preguntas</button></a>
+  <a href="Premios.html"><button class="boton">🐍 Los premios segun chiara</button></a>
+  <a href="fotos.html"><button class="boton">🐍 Galería de Fotos</button></a>
+  <a href="meme.html"><button class="boton">🐍 Crea tu meme</button></a>
+  <a href="CualSos.html"><button class="boton">🐍 ¿Que chiara sos?</button></a>
+  <a href="Redes.html"><button class="boton">🐍 Redes Sociales</button></a>
+
+</body>
+</html>
