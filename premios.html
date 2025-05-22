@@ -15,7 +15,7 @@
       animation: serpienteFondo 15s ease infinite;
       color: white;
       min-height: 100vh;
-      padding: 40px 20px;
+      padding: 20px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -30,17 +30,18 @@
 
     h1 {
       font-family: 'UnifrakturCook', cursive;
-      font-size: 3em;
+      font-size: 2.5em;
       text-shadow: 3px 3px #000;
-      margin-bottom: 30px;
-      letter-spacing: 3px;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
     }
 
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
+      max-width: 1000px;
     }
 
     .premio {
@@ -48,9 +49,9 @@
       border: 2px solid #00ff00;
       border-radius: 15px;
       padding: 10px;
-      width: 200px;
-      min-height: 250px;
-      box-shadow: 0 0 15px #00ff00;
+      width: 160px;
+      min-height: 220px;
+      box-shadow: 0 0 10px #00ff00;
     }
 
     .premio h3 {
@@ -60,7 +61,7 @@
 
     .dropzone {
       width: 100%;
-      height: 200px;
+      height: 180px;
       border: 2px dashed #00ff00;
       border-radius: 10px;
       display: flex;
@@ -76,18 +77,19 @@
     }
 
     .jugadores {
-      margin: 30px 0;
+      margin: 20px 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
+      max-width: 100%;
     }
 
     .jugadores img {
-      width: 80px;
-      cursor: grab;
+      width: 70px;
       border-radius: 10px;
       transition: transform 0.2s;
+      touch-action: none;
     }
 
     .jugadores img:hover {
@@ -98,13 +100,13 @@
       background: linear-gradient(145deg, #00cc00, #003300);
       border: 2px solid #00ff00;
       color: black;
-      padding: 15px 35px;
-      font-size: 1.2em;
+      padding: 12px 25px;
+      font-size: 1em;
       font-weight: bold;
       border-radius: 15px;
       box-shadow: 0 4px 8px #000;
       cursor: pointer;
-      margin: 20px 10px;
+      margin: 20px;
     }
 
     button:hover {
@@ -112,15 +114,28 @@
       box-shadow: 0 6px 12px #00ff00;
       background: linear-gradient(145deg, #33ff33, #006600);
     }
+
+    @media (max-width: 600px) {
+      .premio {
+        width: 140px;
+        min-height: 200px;
+      }
+
+      .jugadores img {
+        width: 60px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>Premios - Chiara Mancuso</h1>
   <div class="jugadores" id="jugadores"></div>
   <div class="container" id="categorias"></div>
-  <div>
-    <button onclick="window.location.href='index.html'">Volver al inicio</button>
-  </div>
+  <button onclick="window.location.href='index.html'">Volver al inicio</button>
 
   <script>
     const jugadores = Array.from({length: 35}, (_, i) => `jugadores/${i+1}.png`);
@@ -139,9 +154,25 @@
       img.src = src;
       img.draggable = true;
       img.id = src;
+
       img.ondragstart = e => {
         e.dataTransfer.setData("text/plain", src);
       };
+
+      // Manejo táctil (touch) para móviles
+      img.addEventListener('touchstart', (e) => {
+        img.dataset.dragging = 'true';
+      });
+
+      img.addEventListener('touchend', (e) => {
+        const touch = e.changedTouches[0];
+        const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (dropTarget && dropTarget.classList.contains('dropzone')) {
+          handleDropTouch(src, dropTarget);
+        }
+        img.dataset.dragging = 'false';
+      });
+
       document.getElementById('jugadores').appendChild(img);
     });
 
@@ -156,12 +187,20 @@
 
     function handleDrop(event, categoria) {
       const src = event.dataTransfer.getData("text/plain");
+      insertarImagen(src, categoria, event.target);
+    }
+
+    function handleDropTouch(src, zona) {
+      const categoria = zona.closest('.premio').querySelector('h3').innerText;
+      insertarImagen(src, categoria, zona);
+    }
+
+    function insertarImagen(src, categoria, zona) {
       if (usados.has(src)) {
         alert("Ya usaste esta imagen.");
         return;
       }
       usados.add(src);
-      const zona = event.target;
       zona.innerHTML = '';
       const img = document.createElement('img');
       img.src = src;
@@ -171,4 +210,3 @@
   </script>
 </body>
 </html>
-
