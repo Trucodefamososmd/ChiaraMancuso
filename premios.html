@@ -15,7 +15,7 @@
       animation: serpienteFondo 15s ease infinite;
       color: white;
       min-height: 100vh;
-      padding: 20px 10px;
+      padding: 40px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -30,18 +30,24 @@
 
     h1 {
       font-family: 'UnifrakturCook', cursive;
-      font-size: 2.5em;
+      font-size: 3em;
       text-shadow: 3px 3px #000;
+      margin-bottom: 10px;
+      letter-spacing: 3px;
+    }
+
+    .aclaracion {
+      font-size: 1em;
       margin-bottom: 20px;
-      letter-spacing: 2px;
+      max-width: 600px;
+      color: #ccffcc;
     }
 
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
-      max-width: 1000px;
+      gap: 20px;
     }
 
     .premio {
@@ -49,9 +55,9 @@
       border: 2px solid #00ff00;
       border-radius: 15px;
       padding: 10px;
-      width: 160px;
-      min-height: 220px;
-      box-shadow: 0 0 10px #00ff00;
+      width: 200px;
+      min-height: 250px;
+      box-shadow: 0 0 15px #00ff00;
     }
 
     .premio h3 {
@@ -61,7 +67,7 @@
 
     .dropzone {
       width: 100%;
-      height: 180px;
+      height: 200px;
       border: 2px dashed #00ff00;
       border-radius: 10px;
       display: flex;
@@ -69,6 +75,7 @@
       align-items: center;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
     }
 
     .dropzone img {
@@ -77,36 +84,41 @@
     }
 
     .jugadores {
-      margin: 20px 0;
+      margin: 30px 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      max-width: 100%;
     }
 
     .jugadores img {
-      width: 70px;
+      width: 80px;
+      cursor: pointer;
       border-radius: 10px;
-      transition: transform 0.2s;
-      touch-action: none;
+      transition: transform 0.2s, border 0.2s;
+      border: 2px solid transparent;
     }
 
     .jugadores img:hover {
       transform: scale(1.1);
     }
 
+    .jugadores img.seleccionado {
+      border: 2px solid #00ff00;
+      transform: scale(1.2);
+    }
+
     button {
       background: linear-gradient(145deg, #00cc00, #003300);
       border: 2px solid #00ff00;
       color: black;
-      padding: 12px 25px;
-      font-size: 1em;
+      padding: 15px 35px;
+      font-size: 1.2em;
       font-weight: bold;
       border-radius: 15px;
       box-shadow: 0 4px 8px #000;
       cursor: pointer;
-      margin: 20px;
+      margin: 20px 10px;
     }
 
     button:hover {
@@ -114,28 +126,18 @@
       box-shadow: 0 6px 12px #00ff00;
       background: linear-gradient(145deg, #33ff33, #006600);
     }
-
-    @media (max-width: 600px) {
-      .premio {
-        width: 140px;
-        min-height: 200px;
-      }
-
-      .jugadores img {
-        width: 60px;
-      }
-
-      h1 {
-        font-size: 2em;
-      }
-    }
   </style>
 </head>
 <body>
   <h1>Premios - Chiara Mancuso</h1>
+  <div class="aclaracion">
+    Tocá una imagen y luego el recuadro donde querés ubicarla. No hace falta arrastrar.
+    </div>
   <div class="jugadores" id="jugadores"></div>
   <div class="container" id="categorias"></div>
-  <button onclick="window.location.href='index.html'">Volver al inicio</button>
+  <div>
+    <button onclick="window.location.href='index.html'">Volver al inicio</button>
+  </div>
 
   <script>
     const jugadores = Array.from({length: 35}, (_, i) => `jugadores/${i+1}.png`);
@@ -149,64 +151,50 @@
       "Más caótico", "Más romántico", "Más jugador del pueblo", "Más estratega oculto", "Más querido"
     ];
 
+    let seleccionado = null;
+    const elecciones = {};
+
     jugadores.forEach(src => {
       const img = document.createElement('img');
       img.src = src;
-      img.draggable = true;
       img.id = src;
-
-      img.ondragstart = e => {
-        e.dataTransfer.setData("text/plain", src);
-      };
-
-      // Manejo táctil (touch) para móviles
-      img.addEventListener('touchstart', (e) => {
-        img.dataset.dragging = 'true';
-      });
-
-      img.addEventListener('touchend', (e) => {
-        const touch = e.changedTouches[0];
-        const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-        if (dropTarget && dropTarget.classList.contains('dropzone')) {
-          handleDropTouch(src, dropTarget);
+      img.onclick = () => {
+        if (usados.has(src)) {
+          alert("Ya usaste esta imagen.");
+          return;
         }
-        img.dataset.dragging = 'false';
-      });
-
+        document.querySelectorAll('.jugadores img').forEach(i => i.classList.remove('seleccionado'));
+        img.classList.add('seleccionado');
+        seleccionado = src;
+      };
       document.getElementById('jugadores').appendChild(img);
     });
 
     categorias.forEach(nombre => {
       const div = document.createElement('div');
       div.className = 'premio';
-      div.innerHTML = `<h3>${nombre}</h3><div class='dropzone' ondragover='event.preventDefault()' ondrop='handleDrop(event, "${nombre}")'></div>`;
+      div.innerHTML = `<h3>${nombre}</h3><div class='dropzone'></div>`;
+      const dropzone = div.querySelector('.dropzone');
+      dropzone.onclick = () => {
+        if (!seleccionado) {
+          alert("Primero seleccioná una imagen.");
+          return;
+        }
+        if (usados.has(seleccionado)) {
+          alert("Ya usaste esta imagen.");
+          return;
+        }
+        usados.add(seleccionado);
+        dropzone.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = seleccionado;
+        dropzone.appendChild(img);
+        elecciones[nombre] = seleccionado;
+        document.querySelectorAll('.jugadores img').forEach(i => i.classList.remove('seleccionado'));
+        seleccionado = null;
+      };
       document.getElementById('categorias').appendChild(div);
     });
-
-    const elecciones = {};
-
-    function handleDrop(event, categoria) {
-      const src = event.dataTransfer.getData("text/plain");
-      insertarImagen(src, categoria, event.target);
-    }
-
-    function handleDropTouch(src, zona) {
-      const categoria = zona.closest('.premio').querySelector('h3').innerText;
-      insertarImagen(src, categoria, zona);
-    }
-
-    function insertarImagen(src, categoria, zona) {
-      if (usados.has(src)) {
-        alert("Ya usaste esta imagen.");
-        return;
-      }
-      usados.add(src);
-      zona.innerHTML = '';
-      const img = document.createElement('img');
-      img.src = src;
-      zona.appendChild(img);
-      elecciones[categoria] = src;
-    }
   </script>
 </body>
 </html>
