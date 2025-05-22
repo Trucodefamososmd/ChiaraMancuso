@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Juego de Preguntas - Chiara Mancuso</title>
+  <title>Juego de moda - Chiara Mancuso</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
@@ -32,60 +32,36 @@
       font-family: 'UnifrakturCook', cursive;
       font-size: 3em;
       text-shadow: 3px 3px #000;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       letter-spacing: 3px;
     }
 
-    .question-container {
-      max-width: 700px;
-      background: rgba(0, 51, 0, 0.8);
-      border: 2px solid #00ff00;
-      border-radius: 15px;
-      padding: 25px 30px;
-      box-shadow: 0 0 15px #00ff00;
+    h2 {
+      margin-bottom: 30px;
+    }
+
+    .gallery, #finalLooks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
       margin-bottom: 20px;
     }
 
-    .question {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-    }
-
-    .options {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .options li {
-      margin: 12px 0;
-    }
-
-    .options button {
-      width: 100%;
-      padding: 12px;
-      font-size: 1.2em;
-      font-weight: bold;
-      border-radius: 12px;
-      border: none;
+    .gallery img, #finalLooks img {
+      width: 180px;
+      height: 260px;
+      object-fit: contain;
+      background-color: black;
+      border-radius: 10px;
       cursor: pointer;
-      background: linear-gradient(145deg, #00cc00, #003300);
-      color: black;
-      box-shadow: 0 4px 8px #000;
-      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      border: 3px solid transparent;
+      transition: transform 0.3s, border 0.3s;
     }
 
-    .options button:hover {
-      background: linear-gradient(145deg, #33ff33, #006600);
+    .gallery img:hover, #finalLooks img:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 12px #00ff00;
-    }
-
-    #result {
-      font-size: 1.6em;
-      margin-top: 20px;
-      text-shadow: 2px 2px #000;
-      min-height: 40px;
+      border-color: #00ff00;
     }
 
     .boton {
@@ -100,7 +76,7 @@
       cursor: pointer;
       transition: transform 0.3s, box-shadow 0.3s;
       text-decoration: none;
-      margin-top: 30px;
+      margin-top: 20px;
       align-self: center;
       display: inline-block;
     }
@@ -110,38 +86,48 @@
       box-shadow: 0 6px 12px #00ff00;
       background: linear-gradient(145deg, #33ff33, #006600);
     }
+
+    #winner img {
+      width: 300px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
 
   <h1>Juego de moda - Chiara Mancuso</h1>
-  <h2>El look que elijas será el ganador</h2>
+  <h2>Hacé clic en un look, y después en el cuadrado donde querés que esté</h2>
+
   <div class="gallery" id="gallery"></div>
-  <div class="modal" id="modal" onclick="closeModal()">
-    <img id="modalImg" src="">
-  </div>
+
   <button class="boton" id="nextButton" onclick="nextSet()" style="display:none;">Siguiente</button>
   <button class="boton" id="finalButton" onclick="showFinal()" style="display:none;">Pasar a la Final</button>
+
   <div id="finalGallery" style="display:none;">
     <h2>Elige tu look ganador</h2>
     <div class="gallery" id="finalLooks"></div>
   </div>
+
   <div id="winner" style="display:none;">
     <h2>Look Ganador:</h2>
-    <img id="winnerImg" src="" style="width:300px; border-radius:10px;">
+    <img id="winnerImg" src="">
   </div>
+
   <a class="boton" href="index.html">Volver al inicio</a>
 
   <script>
     let looks = [
-      "looks/1.png", "looks/2.jpg", "looks/3.png", 
-      "looks/4.png", "looks/5.png", "looks/6.png", 
-      "looks/7.png", "looks/8.png", "looks/9.png", 
-      "looks/10.png", "looks/11.png", "looks/12.png", 
-      "looks/13.png", "looks/14.png", "looks/15.png"
+      "looks/1.jpg", "looks/2.jpg", "looks/3.jpg",
+      "looks/4.jpg", "looks/5.jpg", "looks/6.jpg",
+      "looks/7.jpg", "looks/8.jpg", "looks/9.jpg",
+      "looks/10.jpg", "looks/11.jpg", "looks/12.jpg",
+      "looks/13.jpg", "looks/14.jpg", "looks/15.jpg"
     ];
+
     let currentSet = 0;
     let selectedLooks = [];
+
     function loadLooks() {
       let gallery = document.getElementById('gallery');
       gallery.innerHTML = "";
@@ -153,14 +139,16 @@
       }
       document.getElementById('nextButton').style.display = 'none';
     }
+
     function selectLook(img, look) {
       document.querySelectorAll('.gallery img').forEach(image => {
-        image.style.border = "none";
+        image.style.border = "3px solid transparent";
       });
-      img.style.border = "5px solid red";
+      img.style.border = "3px solid red";
       selectedLooks[currentSet] = look;
       document.getElementById('nextButton').style.display = 'block';
     }
+
     function nextSet() {
       currentSet++;
       if (currentSet < 5) {
@@ -171,6 +159,7 @@
         document.getElementById('finalButton').style.display = 'block';
       }
     }
+
     function showFinal() {
       document.getElementById('finalButton').style.display = 'none';
       document.getElementById('finalGallery').style.display = 'block';
@@ -183,12 +172,15 @@
         finalGallery.appendChild(img);
       });
     }
+
     function showWinner(look) {
       document.getElementById('finalGallery').style.display = 'none';
       document.getElementById('winner').style.display = 'block';
       document.getElementById('winnerImg').src = look;
     }
+
     window.onload = loadLooks;
   </script>
+
 </body>
 </html>
