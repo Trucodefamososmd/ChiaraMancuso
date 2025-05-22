@@ -15,7 +15,7 @@
       animation: serpienteFondo 15s ease infinite;
       color: white;
       min-height: 100vh;
-      padding: 40px 20px;
+      padding: 40px 20px 80px; /* espacio para el botón */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -76,11 +76,25 @@
       font-size: 1.5em;
       text-shadow: 2px 2px #000;
     }
+
+    .footer-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
   <h1>¿Qué Chiara sos?</h1>
+
   <div class="question-container" id="quiz"></div>
+
+  <div class="footer-button">
+    <button onclick="window.location.href='index.html'">Volver al inicio</button>
+  </div>
+
   <script>
     const questions = [
       {
@@ -196,14 +210,17 @@
     }
 
     function showResult() {
-      let result = Object.entries(scores).sort((a,b) => b[1] - a[1])[0][0];
+      let result = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
       const tipoTexto = {
         loca: "¡Sos una Chiara LOCA! Siempre lista para la locura, la aventura y lo inesperado.",
         divertida: "¡Sos una Chiara DIVERTIDA! La risa y el humor son tu esencia.",
         estratega: "¡Sos una Chiara ESTRATEGA! Todo lo pensás dos veces y siempre encontrás el mejor plan.",
         tranqui: "¡Sos una Chiara TRANQUI! Calmado/a, amable, y con mucha paz para dar."
       };
-      container.innerHTML = `<div class='result'>${tipoTexto[result]}</div><button onclick='location.reload()'>Volver a empezar</button><br><br><button onclick="window.location.href='index.html'">Volver al inicio</button>`;
+      container.innerHTML = `
+        <div class='result'>${tipoTexto[result]}</div>
+        <button onclick='location.reload()'>Volver a empezar</button>
+      `;
     }
 
     showQuestion(currentQuestion);
