@@ -58,6 +58,11 @@
     a {
       text-decoration: none;
     }
+
+    /* Botón final separado visualmente */
+    .boton-final {
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
@@ -72,6 +77,12 @@
   <a href="CualSos.html"><button class="boton">🐍 ¿Qué Chiara sos?</button></a>
   <a href="prefe.html"><button class="boton">🐍 ¿Qué jugador de gh preferis?</button></a>
   <a href="redes.html"><button class="boton">🐍 Redes Sociales</button></a>
+
+  <!-- Botón de Sorpresa -->
+  <button class="boton boton-final" onclick="document.getElementById('cobraAudio').play()">🎵 Reproducir sorpresa</button>
+
+  <!-- Audio oculto -->
+  <audio id="cobraAudio" src="cobra.mp4"></audio>
 
 </body>
 </html>
