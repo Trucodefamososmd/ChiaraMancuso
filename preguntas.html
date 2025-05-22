@@ -127,28 +127,48 @@
   <script>
     const questions = [
       {
-        question: "¿Cuál es el apodo que tienen sus amigos para Chiara?",
-        options: ["La reina del baile", "La cobra máxima", "La artista misteriosa", "La musa del humor"],
+        question: "¿Qué edad tiene Chiara?",
+        options: ["27", "29", "30", "32"],
+        answer: 2
+      },
+      {
+        question: "¿A quién sacó Chiara en el VS?",
+        options: ["Lucia", "Luciana", "Catalina", "Delfina"],
         answer: 1
       },
       {
-        question: "¿Qué le apasiona a Chiara Mancuso?",
-        options: ["Deportes extremos", "Arte, música y humor sarcástico", "Cocina gourmet", "Astronomía"],
+        question: "¿Cuántos días estuvo Chiara en la casa?",
+        options: ["140", "154", "168", "132"],
         answer: 1
       },
       {
-        question: "¿Qué característica destaca en Chiara desde pequeña?",
-        options: ["Timidez extrema", "Inteligencia y carisma", "Gran deportista", "Habilidad matemática"],
+        question: "¿Con qué porcentaje se fue Chiara?",
+        options: ["60,1%", "49,8%", "57,3%", "63,5%"],
+        answer: 2
+      },
+      {
+        question: "¿Qué número de participante fue al ingresar a Gran Hermano?",
+        options: ["15", "10", "13", "17"],
+        answer: 2
+      },
+      {
+        question: "¿A quién le anuló los votos cuando salió?",
+        options: ["Ulises", "Luz", "Tato", "Sandra"],
+        answer: 2
+      },
+      {
+        question: "¿Dónde se le perdió el collar de la cobra?",
+        options: ["Atras de la heladera", "Patio", "Inodoro", "Pileta"],
+        answer: 2
+      },
+      {
+        question: "¿En qué semana entró a placa por primera vez?",
+        options: ["1", "2", "4", "3"],
         answer: 1
       },
       {
-        question: "¿Cómo se describe su personalidad?",
-        options: ["Elegante y picarona", "Tímida y reservada", "Simpática pero callada", "Seria y formal"],
-        answer: 0
-      },
-      {
-        question: "¿Dónde ha dejado huella Chiara?",
-        options: ["En sus estudios", "En pasillos escolares y corazones de amigos", "En competencias deportivas", "En concursos de belleza"],
+        question: "¿Con qué streamer apareció Chiara en el verano del 2023?",
+        options: ["Julian Serrano", "Tomas Mazza", "Coscu", "Momo"],
         answer: 1
       }
     ];
@@ -159,6 +179,13 @@
     const questionEl = document.getElementById('question');
     const optionsEl = document.getElementById('options');
     const resultEl = document.getElementById('result');
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
 
     function loadQuestion() {
       resultEl.textContent = '';
@@ -178,7 +205,7 @@
 
     function selectOption(selectedIndex) {
       const correct = questions[currentQuestion].answer;
-      if(selectedIndex === correct){
+      if (selectedIndex === correct) {
         score++;
         resultEl.textContent = "¡Correcto! 🐍";
         resultEl.style.color = "#33ff33";
@@ -187,16 +214,14 @@
         resultEl.style.color = "#ff3333";
       }
 
-      // Bloquear botones para no responder varias veces
       Array.from(optionsEl.children).forEach(li => {
         li.firstChild.disabled = true;
         li.firstChild.style.cursor = 'default';
       });
 
-      // Avanzar a la siguiente pregunta después de 2 segundos
       setTimeout(() => {
         currentQuestion++;
-        if(currentQuestion < questions.length){
+        if (currentQuestion < questions.length) {
           loadQuestion();
         } else {
           showFinalScore();
@@ -204,12 +229,13 @@
       }, 2000);
     }
 
-    function showFinalScore(){
+    function showFinalScore() {
       questionEl.textContent = `¡Juego terminado! Tu puntaje es ${score} de ${questions.length}.`;
       optionsEl.innerHTML = '';
       resultEl.textContent = '';
     }
 
+    shuffle(questions);
     loadQuestion();
   </script>
 </body>
